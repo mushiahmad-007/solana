@@ -1,0 +1,178 @@
+Solana 
+
+
+solana-keygen new --force 
+
+solana-keygen new --outfile ~/.config/solana/devnet.json
+
+ 
+
+
+SPL Token program
+
+
+solana balance --url devnet
+
+solana airdrop 2 WALLET_ADDRESS --url devnet
+
+
+solana-keygen pubkey
+
+spl-token create-token --url devnet
+
+
+
+Accounts - files stored on blockchain that allow us to store data on them
+
+
+We need to create an account in the wallet. One account would hold specific token and allow us to transact specific token
+
+A wallet can have multiple accounts. 
+
+
+spl-token create-account TOKEN_ADDRESS --url devnet
+
+Check Number of tokens that are in the specific account 
+spl-token balance TOKEN_ADDRESS --url devnet
+
+
+Minting - Process of making tokens 
+
+spl-token mint TOKEN_ADDRESS NUMBER_OF_TOKENS --url devnet
+
+Token balance means tokens minted
+
+circulating supply - total number of solana tokens used by users 
+
+Checking supply
+spl-token supply TOKEN_ADDRESS --url devnet
+
+Disable token minting
+spl-token  authorize TOKEN_ADDRESS mint —disable --url devnet
+
+Burn Tokens  that you own ( you can only burn those tokens that you own not ones other own)
+spl-token  burn ACCOUNT_ADDRESS NUMBER_OF_TOKENS --url devnet
+
+
+Transfer: spl-token transfer TOKEN_ADDRESS TOKEN_AMOUNT WALLET_ADDRESS --url devnet —unfunded 
+
+
+
+
+Solana Programs - Used to write lines of code
+stateless 
+
+To store data on solana : Accounts
+ 
+IDL - Interface description Language
+contains information from program that is useful in testing and integrating program with frontend
+
+
+Context - list of accounts that a solana program needs to run successfully
+it consists of solana accounts ( in order to retrieve data )
+
+We put data into accounts using solana program. Then retrieve data by using contexts
+
+
+ts-node /Users/tk-lpt-592/Desktop/workspace/anchor/metaplex/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts  upload -e devnet -k ~/.config/solana/devnet.json -cp config.json ./assets
+
+ts-node /Users/tk-lpt-592/Desktop/workspace/anchor/metaplex/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json
+
+
+
+
+
+
+
+
+
+Sign nft collection with solana wallet
+Sell -  Transfer nft to the buyer’s wallet.
+
+
+standardized tools to create and upload nft
+Metaplex - used to create, upload and mint nft
+
+Metaplex Candy Machine - Allows minting random nft
+
+
+
+
+ts-node /Users/tk-lpt-592/Desktop/workspace/anchor/metaplex/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts  --version
+
+
+
+
+Dapp means server is replaced by solana program and database is replaced by account
+
+
+System Program - 
+1. Creates accounts in solana
+2. Allocates account data
+3. assign accounts to owning programs
+4. Transfer lamports
+5. Pay transaction fee
+
+
+
+
+Program id: specifies how to load and execute this program. also contains info about how solana runtime should treat this program.
+helps see all accounts created and reference them.
+
+
+To deploy program:
+change localnet to devnet in toml file
+build:
+	anchor build
+get program id:
+	solana address -k config file path
+replace output program id with dummy one in lib.rs
+build again:
+	anchor build
+deploy:
+	anchor deploy
+
+
+
+
+Programs can be updated and refreshed and program id won’t be change
+Eth smart contracts cannot be changed.
+
+
+
+opts.preflightCommitment in creating provider:
+it tells us how much  to wait . whether for deploying it to one computer or to deploying it to all computers ( Blockchain )
+
+
+import { SystemProgram, Keypair} = web3; // System Porgram references to core program that runs solana
+
+
+Chainlink
+
+Allows us to use up to date real time data e.g live crypto prices
+Node operators put data on chainlink and locks some money. if data put is good they receive reward and if data is bad they loose their locked amount 
+
+Chainlink Program -  Solana Program created by chainlink
+Chainlink Feed - Data feed
+
+Latest Round -> means retrieving latest data from the feed
+
+
+We have to provide signers if we are creating a new account
+
+
+Program Derived Address
+Accounts that can only be modified by the program
+
+Accounts that can send and receive money.
+Backbone of Solana DeFi
+
+
+
+Account Rent
+When an account is created, it needs to store some SOL as rent in order to maintain its existence. After some time, some SOL would be deducted from that account as rent otherwise that account won’t exist.
+Rent Exemption 
+If 2 years worth of rent is stored in account. Then, rent won’t be collected.
+
+
+
